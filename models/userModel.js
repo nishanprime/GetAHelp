@@ -18,11 +18,9 @@ const userSchema = mongoose.Schema(
     },
     bloodGroup: {
       type: String,
-      required: true,
     },
     address: {
       type: String,
-      required: true,
     },
   },
   {
