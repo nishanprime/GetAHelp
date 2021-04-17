@@ -70,9 +70,6 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// @desc    Login user
-// @route   POST /users/login
-// @access  Public
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -232,6 +229,69 @@ export const addEmergencyContacts = async (req, res) => {
       },
     });
   } catch (err) {
+    //yup error catch here
+    if (err.errors) {
+      return res
+        .status(400)
+        .json({ errors: [err.errors || "Validation Error"] });
+    }
+
+    return res.status(500).json({
+      errors: ["Internal Server Error"],
+    });
+  }
+};
+
+export const updateUserInfo = async (req, res) => {
+  const { name, email, bloodGroup, address, emergencyNotes } = req.body;
+
+  try {
+    let user = await User.findOne({
+      email,
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        errors: ["User doesnot exist with this email!"],
+      });
+    }
+
+    if (name) {
+      user.name = user.name;
+    }
+
+    if (bloodGroup) {
+      user.bloodGroup = user.bloodGroup;
+    }
+
+    if (address) {
+      user.address = user.address;
+    }
+
+    if (emergencyNotes) {
+      user.emergencyNotes = user.emergencyNotes.concat(emergencyNotes);
+    }
+
+    await user.save();
+
+    res.status(201).json({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        currentAddress: user.currentAddress,
+        bloodGroup: user.bloodGroup,
+        chronicDiseases: user.chronicDiseases,
+        allergies: user.allergies,
+        seriousInjuries: user.seriousInjuries,
+        vaccinations: user.vaccinations,
+        emergencyContacts: user.emergencyContacts,
+        emergencyNotes: user.emergencyNotes,
+      },
+    });
+  } catch (err) {
+    console.log("calling after catching:");
+    console.log(err);
     //yup error catch here
     if (err.errors) {
       return res
