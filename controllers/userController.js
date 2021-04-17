@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import crypto from "crypto";
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
 
@@ -10,7 +9,7 @@ import User from "../models/userModel.js";
 // @route   POST /users/register
 // @access  Public
 export const registerUser = async (req, res) => {
-  const { name, email, bloodGroup, address } = req.body;
+  const { name, email, bloodGroup, address, password } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
@@ -26,6 +25,7 @@ export const registerUser = async (req, res) => {
         email,
         bloodGroup,
         address,
+        password,
       },
       { abortEarly: false }
     );
@@ -44,6 +44,7 @@ export const registerUser = async (req, res) => {
       name,
       email,
       bloodGroup,
+      password,
       address,
     });
 
