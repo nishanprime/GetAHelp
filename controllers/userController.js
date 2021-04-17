@@ -315,3 +315,48 @@ export const updateUserInfo = async (req, res) => {
     });
   }
 };
+
+export const getUserInfo = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    let user = await User.findOne({
+      email,
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        errors: ["User doesnot exist with this email!"],
+      });
+    }
+
+    res.status(201).json({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        currentAddress: user.currentAddress,
+        bloodGroup: user.bloodGroup,
+        chronicDiseases: user.chronicDiseases,
+        allergies: user.allergies,
+        seriousInjuries: user.seriousInjuries,
+        vaccinations: user.vaccinations,
+        emergencyContacts: user.emergencyContacts,
+        emergencyNotes: user.emergencyNotes,
+      },
+    });
+  } catch (err) {
+    console.log("calling after catching:");
+    console.log(err);
+    //yup error catch here
+    if (err.errors) {
+      return res
+        .status(400)
+        .json({ errors: [err.errors || "Validation Error"] });
+    }
+
+    return res.status(500).json({
+      errors: ["Internal Server Error"],
+    });
+  }
+};
