@@ -16,6 +16,6 @@ router.route("/login").post(loginUser);
 router.route("/addMedicalInformations").post(addMedicalInformations);
 router.route("/addEmergencyContacts").post(addEmergencyContacts);
 router.route("/updateUserInfo").post(updateUserInfo);
-router.route("/:email").post(getUserInfo);
+router.route("/:email").get(getUserInfo);
 
 export default router;
