@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    userProfile: {
+      type: String,
+    },
     emergencyNotes: {
       type: Array,
       default: [],

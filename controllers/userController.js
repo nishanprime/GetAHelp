@@ -268,6 +268,10 @@ export const updateUserInfo = async (req, res) => {
       user.address = user.address;
     }
 
+    if (userProfile) {
+      user.userProfile = user.userProfile;
+    }
+
     if (emergencyNotes) {
       user.emergencyNotes = user.emergencyNotes.concat(emergencyNotes);
     }
