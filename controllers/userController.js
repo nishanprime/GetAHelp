@@ -243,7 +243,14 @@ export const addEmergencyContacts = async (req, res) => {
 };
 
 export const updateUserInfo = async (req, res) => {
-  const { name, email, bloodGroup, address, emergencyNotes } = req.body;
+  const {
+    name,
+    email,
+    bloodGroup,
+    address,
+    emergencyNotes,
+    userProfile,
+  } = req.body;
 
   try {
     let user = await User.findOne({
