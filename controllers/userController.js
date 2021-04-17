@@ -212,7 +212,7 @@ export const addEmergencyContacts = async (req, res) => {
     }
 
     if (emergencyContacts) {
-      user.emergencyContacts = [...user.emergencyContacts, emergencyContacts];
+      user.emergencyContacts = user.emergencyContacts.concat(emergencyContacts);
     }
 
     await user.save();
