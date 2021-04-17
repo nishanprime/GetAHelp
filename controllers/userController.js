@@ -201,11 +201,11 @@ export const addEmergencyContacts = async (req, res) => {
   const { emergencyContacts, email } = req.body;
 
   try {
-    let userExists = await User.findOne({
+    let user = await User.findOne({
       email,
     });
 
-    if (!userExists) {
+    if (!user) {
       return res.status(400).json({
         errors: ["User doesnot exist with this email!"],
       });
