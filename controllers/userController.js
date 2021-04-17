@@ -5,15 +5,16 @@ import bcrypt from "bcryptjs";
 //models imports
 import User from "../models/userModel.js";
 
-// @desc    Register a new user
-// @route   POST /users/register
-// @access  Public
 export const registerUser = async (req, res) => {
-  const { name, email, bloodGroup, address, password } = req.body;
+  const { name, email, password, currentAddress, bloodGroup } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
     email: Yup.string().required("Email is a required field"),
+    currentAddress: Yup.string().required(
+      "Current Address is a required field"
+    ),
+    bloodGroup: Yup.string().required("BloodGroup is a required field"),
   });
 
   try {
@@ -22,6 +23,8 @@ export const registerUser = async (req, res) => {
         name,
         email,
         password,
+        currentAddress,
+        bloodGroup,
       },
       { abortEarly: false }
     );
@@ -40,6 +43,8 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password,
+      currentAddress,
+      bloodGroup,
     });
 
     res.status(201).json({
@@ -47,6 +52,8 @@ export const registerUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        currentAddress: user.currentAddress,
+        bloodGroup: user.bloodGroup,
       },
     });
   } catch (err) {
@@ -107,6 +114,120 @@ export const loginUser = async (req, res) => {
         email: user.email,
       },
       token: generateToken(user._id),
+    });
+  } catch (err) {
+    //yup error catch here
+    if (err.errors) {
+      return res
+        .status(400)
+        .json({ errors: [err.errors || "Validation Error"] });
+    }
+
+    return res.status(500).json({
+      errors: ["Internal Server Error"],
+    });
+  }
+};
+
+export const addMedicalInformations = async (req, res) => {
+  const {
+    chronicDiseases,
+    allergies,
+    seriousInjuries,
+    vaccinations,
+    email,
+  } = req.body;
+
+  try {
+    let userExists = await User.findOne({
+      email,
+    });
+
+    if (!userExists) {
+      return res.status(400).json({
+        errors: ["User doesnot exist with this email!"],
+      });
+    }
+
+    if (chronicDiseases) {
+      user.chronicDiseases = [...user.chronicDiseases, chronicDiseases];
+    }
+
+    if (allergies) {
+      user.allergies = [...user.allergies, allergies];
+    }
+
+    if (seriousInjuries) {
+      user.seriousInjuries = [...user.seriousInjuries, seriousInjuries];
+    }
+
+    if (vaccinations) {
+      user.vaccinations = [...user.vaccinations, vaccinations];
+    }
+
+    await user.save();
+
+    res.status(201).json({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        currentAddress: user.currentAddress,
+        bloodGroup: user.bloodGroup,
+        chronicDiseases: user.chronicDiseases,
+        allergies: user.allergies,
+        seriousInjuries: user.seriousInjuries,
+        vaccinations: user.vaccinations,
+        emergencyContacts: user.emergencyContacts,
+      },
+    });
+  } catch (err) {
+    //yup error catch here
+    if (err.errors) {
+      return res
+        .status(400)
+        .json({ errors: [err.errors || "Validation Error"] });
+    }
+
+    return res.status(500).json({
+      errors: ["Internal Server Error"],
+    });
+  }
+};
+
+export const addEmergencyContacts = async (req, res) => {
+  const { emergencyContacts, email } = req.body;
+
+  try {
+    let userExists = await User.findOne({
+      email,
+    });
+
+    if (!userExists) {
+      return res.status(400).json({
+        errors: ["User doesnot exist with this email!"],
+      });
+    }
+
+    if (emergencyContacts) {
+      user.emergencyContacts = [...user.emergencyContacts, emergencyContacts];
+    }
+
+    await user.save();
+
+    res.status(201).json({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        currentAddress: user.currentAddress,
+        bloodGroup: user.bloodGroup,
+        chronicDiseases: user.chronicDiseases,
+        allergies: user.allergies,
+        seriousInjuries: user.seriousInjuries,
+        vaccinations: user.vaccinations,
+        emergencyContacts: user.emergencyContacts,
+      },
     });
   } catch (err) {
     //yup error catch here

@@ -18,9 +18,35 @@ const userSchema = mongoose.Schema(
     },
     bloodGroup: {
       type: String,
+      required: true,
     },
-    address: {
+    currentAddress: {
       type: String,
+      required: true,
+    },
+    emergencyNotes: {
+      type: Array,
+      default: [],
+    },
+    chronicDiseases: {
+      type: Array,
+      default: [],
+    },
+    allergies: {
+      type: Array,
+      default: [],
+    },
+    seriousInjuries: {
+      type: Array,
+      default: [],
+    },
+    vaccinations: {
+      type: Array,
+      default: [],
+    },
+    emergencyContacts: {
+      type: Array,
+      default: [],
     },
   },
   {
