@@ -7,7 +7,7 @@ import User from "../models/userModel.js";
 
 // @desc    Register a new user
 // @route   POST /users/register
-// @access  Private (Admin)
+// @access  Public
 export const registerUser = async (req, res) => {
   const { name, email } = req.body;
 
