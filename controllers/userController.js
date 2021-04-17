@@ -150,19 +150,19 @@ export const addMedicalInformations = async (req, res) => {
     }
 
     if (chronicDiseases) {
-      user.chronicDiseases = [...user.chronicDiseases, chronicDiseases];
+      user.chronicDiseases = user.chronicDiseases.concat(chronicDiseases);
     }
 
     if (allergies) {
-      user.allergies = [...user.allergies, allergies];
+      user.allergies = user.allergies.concat(allergies);
     }
 
     if (seriousInjuries) {
-      user.seriousInjuries = [...user.seriousInjuries, seriousInjuries];
+      user.seriousInjuries = user.seriousInjuries.concat(seriousInjuries);
     }
 
     if (vaccinations) {
-      user.vaccinations = [...user.vaccinations, vaccinations];
+      user.vaccinations = user.vaccinations.concat(vaccinations);
     }
 
     await user.save();
@@ -182,11 +182,10 @@ export const addMedicalInformations = async (req, res) => {
       },
     });
   } catch (err) {
-    console.log("calling after catching:")
-    console.log(err)
+    console.log("calling after catching:");
+    console.log(err);
     //yup error catch here
     if (err.errors) {
-      
       return res
         .status(400)
         .json({ errors: [err.errors || "Validation Error"] });
