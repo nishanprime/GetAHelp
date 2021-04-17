@@ -139,11 +139,11 @@ export const addMedicalInformations = async (req, res) => {
   } = req.body;
 
   try {
-    let userExists = await User.findOne({
+    let user = await User.findOne({
       email,
     });
 
-    if (!userExists) {
+    if (!user) {
       return res.status(400).json({
         errors: ["User doesnot exist with this email!"],
       });
@@ -182,8 +182,11 @@ export const addMedicalInformations = async (req, res) => {
       },
     });
   } catch (err) {
+    console.log("calling after catching:")
+    console.log(err)
     //yup error catch here
     if (err.errors) {
+      
       return res
         .status(400)
         .json({ errors: [err.errors || "Validation Error"] });
