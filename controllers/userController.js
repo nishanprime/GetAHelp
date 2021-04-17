@@ -14,8 +14,6 @@ export const registerUser = async (req, res) => {
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
     email: Yup.string().required("Email is a required field"),
-    bloodGroup: Yup.string().required("BloodGroup is a required field"),
-    address: Yup.string().required("Address is a required field"),
   });
 
   try {
@@ -23,8 +21,6 @@ export const registerUser = async (req, res) => {
       {
         name,
         email,
-        bloodGroup,
-        address,
         password,
       },
       { abortEarly: false }
@@ -43,9 +39,7 @@ export const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      bloodGroup,
       password,
-      address,
     });
 
     res.status(201).json({
@@ -53,8 +47,6 @@ export const registerUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        bloodGroup: user.bloodGroup,
-        address: user.address,
       },
     });
   } catch (err) {
