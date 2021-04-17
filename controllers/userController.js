@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import crypto from "crypto";
 import generateToken from "../utils/generateToken.js";
+import bcrypt from "bcryptjs";
 
 //models imports
 import User from "../models/userModel.js";
@@ -101,7 +102,9 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    if (!(await user.matchPassword(password))) {
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
       return res.status(401).json({
         errors: ["Invalid email or password !"],
       });
