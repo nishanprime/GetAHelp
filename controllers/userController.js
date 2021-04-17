@@ -54,6 +54,13 @@ export const registerUser = async (req, res) => {
         email: user.email,
         currentAddress: user.currentAddress,
         bloodGroup: user.bloodGroup,
+        userProfile: user.userProfile,
+        chronicDiseases: user.chronicDiseases,
+        allergies: user.allergies,
+        seriousInjuries: user.seriousInjuries,
+        vaccinations: user.vaccinations,
+        emergencyContacts: user.emergencyContacts,
+        emergencyNotes: user.emergencyNotes,
       },
     });
   } catch (err) {
@@ -171,11 +178,13 @@ export const addMedicalInformations = async (req, res) => {
         email: user.email,
         currentAddress: user.currentAddress,
         bloodGroup: user.bloodGroup,
+        userProfile: user.userProfile,
         chronicDiseases: user.chronicDiseases,
         allergies: user.allergies,
         seriousInjuries: user.seriousInjuries,
         vaccinations: user.vaccinations,
         emergencyContacts: user.emergencyContacts,
+        emergencyNotes: user.emergencyNotes,
       },
     });
   } catch (err) {
@@ -221,11 +230,13 @@ export const addEmergencyContacts = async (req, res) => {
         email: user.email,
         currentAddress: user.currentAddress,
         bloodGroup: user.bloodGroup,
+        userProfile: user.userProfile,
         chronicDiseases: user.chronicDiseases,
         allergies: user.allergies,
         seriousInjuries: user.seriousInjuries,
         vaccinations: user.vaccinations,
         emergencyContacts: user.emergencyContacts,
+        emergencyNotes: user.emergencyNotes,
       },
     });
   } catch (err) {
@@ -292,6 +303,7 @@ export const updateUserInfo = async (req, res) => {
         email: user.email,
         currentAddress: user.currentAddress,
         bloodGroup: user.bloodGroup,
+        userProfile: user.userProfile,
         chronicDiseases: user.chronicDiseases,
         allergies: user.allergies,
         seriousInjuries: user.seriousInjuries,
@@ -337,6 +349,7 @@ export const getUserInfo = async (req, res) => {
         email: user.email,
         currentAddress: user.currentAddress,
         bloodGroup: user.bloodGroup,
+        userProfile: user.userProfile,
         chronicDiseases: user.chronicDiseases,
         allergies: user.allergies,
         seriousInjuries: user.seriousInjuries,
