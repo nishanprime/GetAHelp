@@ -39,12 +39,10 @@ export const registerUser = async (req, res) => {
         errors: ["User with this email already registered!"],
       });
     }
-    let password = crypto.randomBytes(8);
 
     const user = await User.create({
       name,
       email,
-      password: password.toString("hex"),
       bloodGroup,
       address,
     });
@@ -101,7 +99,6 @@ export const loginUser = async (req, res) => {
         errors: ["Invalid email or password !"],
       });
     }
-
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
